@@ -1,5 +1,7 @@
 package gauss;
 
+import java.util.ArrayList;
+
 public class Algorithm<N extends Number, T extends Gauss<N, T>> {
     LinearSystem<N, T> list;
 
@@ -22,6 +24,20 @@ public class Algorithm<N extends Number, T extends Gauss<N, T>> {
                 list.get(j).addEquation(list.get(i));
             }
         }
+    }
+
+    public ArrayList<N> getResidualVector(N[] x) {
+        ArrayList<N> results = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Double r = Double.parseDouble(String.valueOf(list.get(i).at(list.size())));
+            for (int j = 0; j < list.get(i).size() - 1; j++) {
+                Double a = Double.parseDouble(String.valueOf(list.get(i).at(j)));
+                Double b = Double.parseDouble(String.valueOf(x[j]));
+                r -= (a * b);
+            }
+            results.add((N) r);
+        }
+        return results;
     }
 //
 //    public void calculateDeterminant() {

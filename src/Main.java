@@ -3,7 +3,9 @@ import gauss.MyEquation;
 import gauss.LinearSystem;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     private static int DEFAULT_EQUATIONS_NUMBER = 5;
@@ -11,8 +13,14 @@ public class Main {
 
     public static void main(String args[]) {
 //        LinearSystem<Double, MyEquation> list = generateSystem();
-        LinearSystem<Double, MyEquation> list = readSystemFromFile("valid-1.txt");
+        System.out.println("Введите название файла, с которого нужно считать СЛАУ");
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine().trim();
+        LinearSystem<Double, MyEquation> list = readSystemFromFile(line);
+
+        System.out.println("Matrix before transformation: ");
         printSystem(list);
+
         int i, j;
         Algorithm<Double, MyEquation> alg = new Algorithm<>(list);
 
@@ -31,8 +39,27 @@ public class Main {
             }
             x[i] = (list.itemAt(i, list.size()) - sum) / list.itemAt(i, j);
         }
+        System.out.println("Matrix in triangular form after transformation: ");
         printSystem(list);
+        System.out.printf("Determinant: %.2f \n\n", getDeterminant(list));
+        System.out.println("Solutions:");
         printVector(x);
+        System.out.println("Вектор невязок:");
+        printArray(alg.getResidualVector(x));
+    }
+
+    public static void printArray(ArrayList<? extends Number> x) {
+        StringBuilder s = new StringBuilder();
+        x.forEach(number -> s.append(String.format("%.2f; ", number)));
+        System.out.println(s);
+    }
+
+    public static Double getDeterminant(LinearSystem<Double, MyEquation> matrix) {
+        double r = 1;
+        for (int i = 0; i < matrix.size(); i++) {
+            r *= matrix.get(i).at(i);
+        }
+        return r;
     }
 
     public static LinearSystem<Double, MyEquation> generateSystem() {
