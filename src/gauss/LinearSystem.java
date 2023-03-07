@@ -21,4 +21,14 @@ public class LinearSystem<N extends Number, T extends Gauss<N, T>> {
     public N itemAt(int i, int j) {
         return list.get(i).at(j);
     }
+
+    public boolean replace(int index, int to) {
+        if (to < list.size() && index < list.size()){
+            var temp = list.get(to);
+            list.set(to, list.get(index));
+            list.set(index, temp);
+            return true;
+        }
+        return false;
+    }
 }

@@ -41,7 +41,7 @@ public class Main {
         }
         System.out.println("Matrix in triangular form after transformation: ");
         printSystem(list);
-        System.out.printf("Determinant: %.2f \n\n", getDeterminant(list));
+        System.out.printf("Determinant: %.2f \n\n", getDeterminant(list) * Math.pow(-1, alg.getCountZero()));
         System.out.println("Solutions:");
         printVector(x);
         System.out.println("Вектор невязок:");

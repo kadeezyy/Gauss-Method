@@ -37,7 +37,7 @@ public class MyEquation implements Gauss<Double, MyEquation> {
     public void addEquation(MyEquation item) {
         ListIterator<Double> i = equation.listIterator();
         ListIterator<Double> j = item.getEquation().listIterator();
-        for (; i.hasNext() && j.hasNext(); ) {
+        while (i.hasNext() && j.hasNext()) {
             Double a = i.next();
             Double b = j.next();
             i.set(a + b);
@@ -54,7 +54,9 @@ public class MyEquation implements Gauss<Double, MyEquation> {
 
     @Override
     public Double findCoefficient(Double a, Double b) {
-        if (a == 0.0) return 1.0;
+        if (a == 0.0) {
+            return 1.0;
+        }
         return -b / a;
     }
 
